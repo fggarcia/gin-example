@@ -31,6 +31,7 @@ var (
 )
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	router.GET("/albums/:id", getAlbumByID)
 	router.GET("/albums/create/:count", createAlbums)
