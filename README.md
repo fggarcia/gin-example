@@ -81,5 +81,7 @@ se crean los siguientes profiles:
 * heap_delete.out -> profile despues de eliminar todos los albums
 * heap_delete_gc.out -> profile despues de correr el GC
 
-ver cada uno con 
+ver cada uno con
+```
 go tool pprof -http=:<numero_de_puerto> <nombre_del_archivo>.out
+```
