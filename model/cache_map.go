@@ -67,3 +67,7 @@ func (m *CacheMap) get(k string) interface{} {
 func (m *CacheMap) Delete(k string) {
 	delete(m.data, k)
 }
+
+func (m *CacheMap) Size() int {
+	return len(m.data)
+}

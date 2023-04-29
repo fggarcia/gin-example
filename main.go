@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/goccy/go-json"
 	//"encoding/json"
+	//"github.com/go-json-experiment/json"
 	"io"
 	"log"
 	"net/http"
@@ -33,6 +34,7 @@ func main() {
 	router.GET("/albums/:id", getAlbumByID)
 	router.GET("/albums/create/:count", createAlbums)
 	router.GET("/albums/delete/:count", deleteAlbums)
+	router.GET("/albums/cache", cacheSize)
 	router.GET("/albums/gc", gc)
 	router.GET("/albums/file/:filename", fromFiles)
 	pprof.Register(router)
@@ -125,4 +127,13 @@ func fromFiles(c *gin.Context) {
 	putIntoCache(albums)
 
 	c.IndentedJSON(http.StatusOK, "{status: ok}")
+}
+
+type CacheSize struct {
+	Size int `json:"size"`
+}
+
+func cacheSize(c *gin.Context) {
+	size := cache.Size()
+	c.IndentedJSON(http.StatusOK, CacheSize{Size: size})
 }
