@@ -1,20 +1,24 @@
 package common
 
-import (
-	"github.com/mitchellh/copystructure"
-	//"github.com/jinzhu/copier"
-	//"log"
-)
+import "github.com/mitchellh/copystructure"
 
 func DeepCopy(v interface{}) (interface{}, error) {
 	return copystructure.Copy(v)
-
 	/*
-		var result interface{}
-		err := copier.CopyWithOption(&result, v, copier.Option{DeepCopy: true})
+		srcType := reflect.TypeOf(v)
+		srcValue := reflect.ValueOf(v)
+
+		if srcType.Kind() == reflect.Ptr {
+			srcType = srcType.Elem()
+			srcValue = srcValue.Elem()
+		}
+
+		dest := reflect.New(srcType).Interface()
+		err := copier.Copy(dest, v)
 		if err != nil {
 			return nil, err
 		}
-		return result, nil
+
+		return dest, nil
 	*/
 }
