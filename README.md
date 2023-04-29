@@ -47,6 +47,10 @@ curl -X GET http://localhost:8080/albums/create/0,100000 > data.json
 ```
 curl -X GET http://localhost:8080/albums/delete/0,2000000
 ```
+##### VER TAMAÑO DEL MAPA
+```
+curl -X GET http://localhost:8080/albums/cache
+```
 
 # PROCEDURE LEAK
 Para poder probar los distintos escenarios de los serializadores
