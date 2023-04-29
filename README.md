@@ -4,6 +4,12 @@ PARA CREAR LA DATA A PROCESAR PRIMERO CORRER EL SCRIPT
 ```
 ./create_files.sh
 ```
+
+SE AUTOMATIZO LOS PASOS DE ABAJO EN UN SCRIPT
+```
+./procedure.sh
+```
+
 ESTO CREA LOS 3 ARCHIVOS QUE SE MENCIONAN A CONTINUACION
 
 #### ESTE ARCHIVO CREA EN EL CACHEMAP ALBUMS CON ID DEL 0 AL 999_999_999
@@ -36,4 +42,8 @@ curl -X GET http://localhost:8080/albums/gc
 ##### CREA UN ARCHIVO CON IDS DEL 0 AL 99_999 POR EJEMPLO
 ```
 curl -X GET http://localhost:8080/albums/create/0,100000 > data.json
+```
+##### DELETE IDS DEL MAPA CON RANGO DE IDS
+```
+curl -X GET http://localhost:8080/albums/delete/0,2000000
 ```

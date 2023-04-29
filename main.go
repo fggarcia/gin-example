@@ -32,6 +32,7 @@ func main() {
 	router := gin.Default()
 	router.GET("/albums/:id", getAlbumByID)
 	router.GET("/albums/create/:count", createAlbums)
+	router.GET("/albums/delete/:count", deleteAlbums)
 	router.GET("/albums/gc", gc)
 	router.GET("/albums/file/:filename", fromFiles)
 	pprof.Register(router)
@@ -65,6 +66,16 @@ func createAlbums(c *gin.Context) {
 	}
 	putIntoCache(albums)
 	c.IndentedJSON(http.StatusOK, albums)
+}
+
+func deleteAlbums(c *gin.Context) {
+	count := strings.Split(c.Param("count"), ",")
+	countInit, _ := strconv.Atoi(count[0])
+	countEnd, _ := strconv.Atoi(count[1])
+	for i := countInit; i < countEnd; i++ {
+		cache.Delete(strconv.Itoa(i))
+	}
+	c.IndentedJSON(http.StatusOK, "{status: ok}")
 }
 
 func putIntoCache(data []*album) bool {

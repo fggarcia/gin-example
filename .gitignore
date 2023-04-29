@@ -6,3 +6,5 @@ gin-example.iml
 albums.json
 albums_2.json
 albums_3.json
+
+*.out

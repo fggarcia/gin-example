@@ -63,3 +63,7 @@ func (m *CacheMap) get(k string) interface{} {
 	}
 	return entry.value
 }
+
+func (m *CacheMap) Delete(k string) {
+	delete(m.data, k)
+}
