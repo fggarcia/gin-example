@@ -1,9 +1,3 @@
-echo "CREATING FILE..."
-
-./create_files.sh
-
-sleep 1
-
 echo "PROCESSING FILE albums_0-500_000.json..."
 
 curl -X GET http://localhost:8080/albums/file/albums_0-500_000
