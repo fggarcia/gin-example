@@ -12,6 +12,7 @@ en el archivo main.go se encuentra la siguiente config:
 "github.com/goccy/go-json"
 //"encoding/json"
 //"github.com/go-json-experiment/json"
+//json "github.com/bytedance/sonic"
 ```
 
 PD: sino estan creados los archivos albums.json, albums_2.json y
