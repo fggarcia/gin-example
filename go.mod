@@ -3,11 +3,11 @@ module gin-example
 go 1.20
 
 require (
-	github.com/bytedance/sonic v1.8.0
+	github.com/bytedance/sonic v1.8.0 // indirect
 	github.com/gin-contrib/pprof v1.4.0
 	github.com/gin-gonic/gin v1.9.0
-	github.com/go-json-experiment/json v0.0.0-20230321051131-ccbac49a6929
-	github.com/goccy/go-json v0.10.2 // indirect
+	github.com/goccy/go-json v0.10.2
+	github.com/jinzhu/copier v0.3.5
 	github.com/mitchellh/copystructure v1.2.0
 )
 

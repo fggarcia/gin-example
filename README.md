@@ -5,7 +5,41 @@ PARA CREAR LA DATA A PROCESAR PRIMERO CORRER EL SCRIPT
 ./create_files.sh
 ```
 
-SE AUTOMATIZO LOS PASOS DE ABAJO EN UN SCRIPT
+# PROCEDURE LEAK
+Para poder probar los distintos escenarios de los serializadores
+en el archivo main.go se encuentra la siguiente config:
+```
+"github.com/goccy/go-json"
+//"encoding/json"
+//"github.com/go-json-experiment/json"
+```
+
+PD: sino estan creados los archivos albums.json, albums_2.json y
+albums_3.json primero correr
+```
+./create_files.sh
+```
+
+Para crear el escenario correr:
+```
+./procedure_leak.sh
+```
+
+se crean los siguientes profiles:
+
+* heap_post_file.out -> profile apenas se terminan de insertar los 500_000 albums
+* heap_post_file_gc.out -> profile despues de correr el GC
+* heap_delete_less_one.out -> profile despues de eliminar casi todos los albums salvo 1
+* heap_delete_less_one_gc.out -> profile despues de correr el GC
+* heap_delete.out -> profile despues de eliminar todos los albums
+* heap_delete_gc.out -> profile despues de correr el GC
+
+ver cada uno con
+```
+go tool pprof -http=:<numero_de_puerto> <nombre_del_archivo>.out
+```
+
+# OTRO PROCEDURE
 ```
 ./procedure.sh
 ```
@@ -50,38 +84,4 @@ curl -X GET http://localhost:8080/albums/delete/0,2000000
 ##### VER TAMAÑO DEL MAPA
 ```
 curl -X GET http://localhost:8080/albums/cache
-```
-
-# PROCEDURE LEAK
-Para poder probar los distintos escenarios de los serializadores
-en el archivo main.go se encuentra la siguiente config:
-```
-"github.com/goccy/go-json"
-//"encoding/json"
-//"github.com/go-json-experiment/json"
-```
-
-PD: sino estan creados los archivos albums.json, albums_2.json y 
-albums_3.json primero correr
-```
-./create_files.sh
-```
-
-Para crear el escenario correr:
-```
-./procedure_leak.sh
-```
-
-se crean los siguientes profiles:
-
-* heap_post_file.out -> profile apenas se terminan de insertar los 500_000 albums
-* heap_post_file_gc.out -> profile despues de correr el GC
-* heap_delete_less_one.out -> profile despues de eliminar casi todos los albums salvo 1
-* heap_delete_less_one_gc.out -> profile despues de correr el GC
-* heap_delete.out -> profile despues de eliminar todos los albums
-* heap_delete_gc.out -> profile despues de correr el GC
-
-ver cada uno con
-```
-go tool pprof -http=:<numero_de_puerto> <nombre_del_archivo>.out
 ```
