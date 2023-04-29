@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "PROCESSING FILE: albums.json (60 MB).... 0-499_999"
-curl -X GET http://localhost:8080/albums/file/albums_2 > /dev/null
+echo "PROCESSING FILE: albums_0-500_000.json (60 MB).... 0-499_999"
+curl -X GET http://localhost:8080/albums/file/albums_0-500_000 > /dev/null
 
 sleep 1
 

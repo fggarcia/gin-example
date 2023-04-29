@@ -49,17 +49,17 @@ ESTO CREA LOS 3 ARCHIVOS QUE SE MENCIONAN A CONTINUACION
 
 #### ESTE ARCHIVO CREA EN EL CACHEMAP ALBUMS CON ID DEL 0 AL 999_999_999
 ```
-curl -X GET http://localhost:8080/albums/file/albums
+curl -X GET http://localhost:8080/albums/file/albums_0-1_000_000
 ```
 
 #### ESTE CREA DEL 0 AL 499_999 
 ```
-curl -X GET http://localhost:8080/albums/file/albums_2
+curl -X GET http://localhost:8080/albums/file/albums_0-500_000
 ```
 
 #### ESTE CREA DEL 0 AL 500_000 AL 1_999_999 (PARA PROBAR DE REPISAR KEYS)
 ```
-curl -X GET http://localhost:8080/albums/file/albums_3
+curl -X GET http://localhost:8080/albums/file/albums_500_000-2_000_000
 ```
 
 #### PARA CREAR UN PROFILE

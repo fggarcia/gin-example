@@ -3,8 +3,8 @@
 
 gin-example.iml
 
-albums.json
-albums_2.json
-albums_3.json
+albums_0-1_000_000.json
+albums_0-500_000.json
+albums_500_000-2_000_000.json
 
 *.out
