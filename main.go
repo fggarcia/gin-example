@@ -1,13 +1,14 @@
 package main
 
 import (
+	"bytes"
 	"gin-example/model"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
-	//"github.com/goccy/go-json"
+	"github.com/goccy/go-json"
 	//"encoding/json"
 	//"github.com/go-json-experiment/json"
-	json "github.com/bytedance/sonic"
+	//json "github.com/bytedance/sonic"
 	"io"
 	"log"
 	"net/http"
@@ -95,11 +96,40 @@ func gc(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, "{status: ok}")
 }
 
+/*
 func unmarshal(data []byte) ([]*album, error) {
 	var albums []*album
 	if err := json.Unmarshal(data, &albums); err != nil {
 		return nil, err
 	}
+	return albums, nil
+}
+
+func unmarshal(data []byte) ([]*album, error) {
+	var albums []*album
+	if err := json.NewDecoder(bytes.NewReader(data)).Decode(&albums); err != nil {
+		return nil, err
+	}
+	return albums, nil
+}
+*/
+
+func unmarshal(data []byte) ([]*album, error) {
+	var tmp []json.RawMessage
+	//if err := json.Unmarshal(data, &tmp); err != nil {
+	if err := json.NewDecoder(bytes.NewReader(data)).Decode(&tmp); err != nil {
+		return nil, err
+	}
+	albums := make([]*album, len(tmp))
+
+	for i, raw := range tmp {
+		album := &album{}
+		if err := json.Unmarshal(raw, album); err != nil {
+			return nil, err
+		}
+		albums[i] = album
+	}
+
 	return albums, nil
 }
 func getBytesFromFile(filename string) ([]byte, error) {
