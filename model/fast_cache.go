@@ -84,7 +84,10 @@ func (s *fastCache) Set(data []any, f KeyExtractor) (bool, []error) {
 		newCache.Set(entitySlice[0], entitySlice[1])
 	}
 
-	s.data.Swap(newCache)
+	oldCache := s.data.Swap(newCache)
+	if oldCache != nil {
+		oldCache.Reset()
+	}
 
 	if len(errors) != 0 {
 		return false, errors
