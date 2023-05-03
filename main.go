@@ -18,17 +18,11 @@ import (
 	"strings"
 )
 
-// album represents data about a record album.
-type album struct {
-	ID     string  `json:"id"`
-	Title  string  `json:"title"`
-	Artist string  `json:"artist"`
-	Price  float64 `json:"price"`
-}
-
 // albums slice to seed record album data.
 var (
-	cache = model.NewCacheMap()
+	cache             = model.NewCacheMap()
+	fast_cache        = model.NewFastCache("album", &model.AlbumEncoder{})
+	extract_album_key = func(entity any) (string, error) { return entity.(*model.Album).ID, nil }
 )
 
 func main() {
@@ -40,18 +34,21 @@ func main() {
 	router.GET("/albums/cache", cacheSize)
 	router.GET("/albums/gc", gc)
 	router.GET("/albums/file/:filename", fromFiles)
+	router.GET("/albums/file_fast_cache/:filename", fromFilesFastCache)
 	pprof.Register(router)
 	router.Run("localhost:8080")
 }
 
 func getAlbumByID(c *gin.Context) {
 	id := c.Param("id")
-	album := cache.Get(id)
+	//album := cache.Get(id)
+	album, _ := fast_cache.Get(id)
 	if album == nil {
 		c.Status(http.StatusNotFound)
 		return
 	}
-	c.IndentedJSON(http.StatusOK, album)
+	//c.IndentedJSON(http.StatusOK, album)
+	c.IndentedJSON(http.StatusOK, album.(*model.Album))
 }
 
 func createAlbums(c *gin.Context) {
@@ -59,9 +56,9 @@ func createAlbums(c *gin.Context) {
 	countInit, _ := strconv.Atoi(count[0])
 	countEnd, _ := strconv.Atoi(count[1])
 	log.Printf("count: %s", count)
-	albums := make([]*album, 0, countEnd-countInit)
+	albums := make([]*model.Album, 0, countEnd-countInit)
 	for i := countInit; i < countEnd; i++ {
-		album := &album{
+		album := &model.Album{
 			ID:     strconv.Itoa(i),
 			Title:  "Blue Train",
 			Artist: "John Coltrane",
@@ -83,7 +80,7 @@ func deleteAlbums(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, "{status: ok}")
 }
 
-func putIntoCache(data []*album) bool {
+func putIntoCache(data []*model.Album) bool {
 	for _, album := range data {
 		cache.Put(album.ID, album)
 	}
@@ -103,35 +100,36 @@ func unmarshal(data []byte) ([]*album, error) {
 		return nil, err
 	}
 	return albums, nil
-}
+}*/
 
-func unmarshal(data []byte) ([]*album, error) {
-	var albums []*album
+func unmarshal(data []byte) ([]*model.Album, error) {
+	var albums []*model.Album
 	if err := json.NewDecoder(bytes.NewReader(data)).Decode(&albums); err != nil {
 		return nil, err
 	}
 	return albums, nil
 }
-*/
 
-func unmarshal(data []byte) ([]*album, error) {
-	var tmp []json.RawMessage
-	//if err := json.Unmarshal(data, &tmp); err != nil {
-	if err := json.NewDecoder(bytes.NewReader(data)).Decode(&tmp); err != nil {
-		return nil, err
-	}
-	albums := make([]*album, len(tmp))
-
-	for i, raw := range tmp {
-		album := &album{}
-		if err := json.Unmarshal(raw, album); err != nil {
+/*
+	func unmarshal(data []byte) ([]*album, error) {
+		var tmp []json.RawMessage
+		//if err := json.Unmarshal(data, &tmp); err != nil {
+		if err := json.NewDecoder(bytes.NewReader(data)).Decode(&tmp); err != nil {
 			return nil, err
 		}
-		albums[i] = album
-	}
+		albums := make([]*album, len(tmp))
 
-	return albums, nil
-}
+		for i, raw := range tmp {
+			album := &album{}
+			if err := json.Unmarshal(raw, album); err != nil {
+				return nil, err
+			}
+			albums[i] = album
+		}
+
+		return albums, nil
+	}
+*/
 func getBytesFromFile(filename string) ([]byte, error) {
 	file, err := os.Open(filename)
 	if err != nil {
@@ -157,6 +155,30 @@ func fromFiles(c *gin.Context) {
 	}
 
 	putIntoCache(albums)
+
+	c.IndentedJSON(http.StatusOK, "{status: ok}")
+}
+
+func fromFilesFastCache(c *gin.Context) {
+	fileName := c.Param("filename")
+	data, err := getBytesFromFile(fileName + ".json")
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	albumsTmp, err := unmarshal(data)
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	albums := make([]any, len(albumsTmp))
+	for _, album := range albumsTmp {
+		albums = append(albums, album)
+	}
+
+	fast_cache.Set(albums, extract_album_key)
 
 	c.IndentedJSON(http.StatusOK, "{status: ok}")
 }
