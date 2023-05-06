@@ -13,7 +13,7 @@ func (e *AlbumEncoder) Encode(v interface{}) ([]byte, error) {
 
 func (e *AlbumEncoder) Decode(data []byte) interface{} {
 	var entity *Album
-	err := json.Unmarshal(data, &entity)
+	err := json.Unmarshal(data, entity)
 	if err != nil {
 		return nil
 	}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"gin-example/model"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
@@ -21,14 +22,20 @@ import (
 // albums slice to seed record album data.
 var (
 	cache             = model.NewCacheMap()
-	fast_cache        = model.NewFastCache("album", &model.AlbumEncoder{})
-	extract_album_key = func(entity any) (string, error) { return entity.(*model.Album).ID, nil }
+	encoder           = &model.AlbumEncoder{}
+	fast_cache        = model.NewFastCache("album", encoder)
+	extract_album_key = func(entity any) (string, error) { return entity.(model.Album).ID, nil }
+)
+
+const (
+	okStatus = "{status: ok}"
 )
 
 func main() {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	router.GET("/albums/:id", getAlbumByID)
+	router.GET("/albums/get/:p", getOneAlbum)
 	router.GET("/albums/create/:count", createAlbums)
 	router.GET("/albums/delete/:count", deleteAlbums)
 	router.GET("/albums/cache", cacheSize)
@@ -37,6 +44,16 @@ func main() {
 	router.GET("/albums/file_fast_cache/:filename", fromFilesFastCache)
 	pprof.Register(router)
 	router.Run("localhost:8080")
+}
+
+func getOneAlbum(c *gin.Context) {
+	p := c.Param("p")
+	rawEntity := cache.Get("0")
+	entity := encoder.Decode(rawEntity.([]byte))
+	album := entity.(*model.Album)
+	fmt.Printf("raw album: %v\n", album)
+	album.ID = p
+	c.IndentedJSON(http.StatusOK, album)
 }
 
 func getAlbumByID(c *gin.Context) {
@@ -66,7 +83,7 @@ func createAlbums(c *gin.Context) {
 		}
 		albums = append(albums, album)
 	}
-	putIntoCache(albums)
+	putIntoCache(&albums)
 	c.IndentedJSON(http.StatusOK, albums)
 }
 
@@ -77,12 +94,24 @@ func deleteAlbums(c *gin.Context) {
 	for i := countInit; i < countEnd; i++ {
 		cache.Delete(strconv.Itoa(i))
 	}
-	c.IndentedJSON(http.StatusOK, "{status: ok}")
+	c.IndentedJSON(http.StatusOK, okStatus)
 }
 
-func putIntoCache(data []*model.Album) bool {
-	for _, album := range data {
-		cache.Put(album.ID, album)
+func putIntoCache(data *[]*model.Album) bool {
+	albumsTmp := make([][]byte, 0, len(*data))
+	for _, album := range *data {
+		entity, err := encoder.Encode(album)
+		if err != nil {
+			fmt.Printf("encode error: %v", err)
+		} else {
+			albumsTmp = append(albumsTmp, entity)
+		}
+	}
+	for idx, album := range albumsTmp {
+		var copied = make([]byte, 0, len(album))
+		copy(copied, album)
+		key := strconv.Itoa(idx)
+		cache.Put(key, &copied)
 	}
 	return true
 }
@@ -90,7 +119,7 @@ func putIntoCache(data []*model.Album) bool {
 func gc(c *gin.Context) {
 	log.Println("Running gc")
 	runtime.GC()
-	c.IndentedJSON(http.StatusOK, "{status: ok}")
+	c.IndentedJSON(http.StatusOK, okStatus)
 }
 
 /*
@@ -102,12 +131,12 @@ func unmarshal(data []byte) ([]*album, error) {
 	return albums, nil
 }*/
 
-func unmarshal(data []byte) ([]*model.Album, error) {
+func unmarshal(data *[]byte) (*[]*model.Album, error) {
 	var albums []*model.Album
-	if err := json.NewDecoder(bytes.NewReader(data)).Decode(&albums); err != nil {
+	if err := json.NewDecoder(bytes.NewReader(*data)).Decode(&albums); err != nil {
 		return nil, err
 	}
-	return albums, nil
+	return &albums, nil
 }
 
 /*
@@ -148,6 +177,10 @@ func fromFiles(c *gin.Context) {
 		return
 	}
 
+	unmarshalAndPut(c, &data)
+}
+
+func unmarshalAndPut(c *gin.Context, data *[]byte) {
 	albums, err := unmarshal(data)
 	if err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, err)
@@ -155,8 +188,7 @@ func fromFiles(c *gin.Context) {
 	}
 
 	putIntoCache(albums)
-
-	c.IndentedJSON(http.StatusOK, "{status: ok}")
+	c.IndentedJSON(http.StatusOK, okStatus)
 }
 
 func fromFilesFastCache(c *gin.Context) {
@@ -167,20 +199,20 @@ func fromFilesFastCache(c *gin.Context) {
 		return
 	}
 
-	albumsTmp, err := unmarshal(data)
+	albumsTmp, err := unmarshal(&data)
 	if err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, err)
 		return
 	}
 
-	albums := make([]any, len(albumsTmp))
-	for _, album := range albumsTmp {
+	albums := make([]any, len(*albumsTmp))
+	for _, album := range *albumsTmp {
 		albums = append(albums, album)
 	}
 
 	fast_cache.Set(albums, extract_album_key)
 
-	c.IndentedJSON(http.StatusOK, "{status: ok}")
+	c.IndentedJSON(http.StatusOK, okStatus)
 }
 
 type CacheSize struct {

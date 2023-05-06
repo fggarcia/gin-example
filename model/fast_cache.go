@@ -7,9 +7,9 @@ import (
 )
 
 type fastCache struct {
-	name    string
-	data    *atomic.Pointer[fastcache.Cache]
 	encoder Encoder
+	data    *atomic.Pointer[fastcache.Cache]
+	name    string
 }
 
 func NewFastCache(name string, encoder Encoder) KVSnapshot {
