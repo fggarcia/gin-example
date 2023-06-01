@@ -4,9 +4,9 @@ go 1.20
 
 require (
 	github.com/VictoriaMetrics/fastcache v1.12.1
-	github.com/bytedance/sonic v1.8.10 // indirect
+	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/gin-contrib/pprof v1.4.0
-	github.com/gin-gonic/gin v1.9.0
+	github.com/gin-gonic/gin v1.9.1
 	github.com/goccy/go-json v0.10.2
 	github.com/mitchellh/copystructure v1.2.0
 )
