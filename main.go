@@ -2,11 +2,15 @@ package main
 
 import (
 	"bytes"
+	"database/sql"
 	"fmt"
 	"gin-example/model"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/goccy/go-json"
+	_ "github.com/proullon/ramsql/driver"
+	"sync"
+
 	//"encoding/json"
 	//"github.com/go-json-experiment/json"
 	//json "github.com/bytedance/sonic"
@@ -25,6 +29,8 @@ var (
 	encoder           = &model.AlbumEncoder{}
 	fast_cache        = model.NewFastCache("album", encoder)
 	extract_album_key = func(entity any) (string, error) { return entity.(model.Album).ID, nil }
+
+	db, _ = sql.Open("ramsql", "TestLoadUserAddresses")
 )
 
 const (
@@ -32,8 +38,11 @@ const (
 )
 
 func main() {
+	//db.SetMaxOpenConns(1)
+
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
+	router.GET("/query", querySQL)
 	router.GET("/albums/:id", getAlbumByID)
 	router.GET("/albums/get/:p", getOneAlbum)
 	router.GET("/albums/create/:count", createAlbums)
@@ -43,7 +52,62 @@ func main() {
 	router.GET("/albums/file/:filename", fromFiles)
 	router.GET("/albums/file_fast_cache/:filename", fromFilesFastCache)
 	pprof.Register(router)
+	runtime.SetBlockProfileRate(1)
 	router.Run("localhost:8080")
+}
+
+func querySQL(c *gin.Context) {
+	fmt.Printf("Calling SQL")
+	batch := []string{
+		`CREATE TABLE address (id BIGSERIAL PRIMARY KEY, street TEXT, street_number INT);`,
+		`CREATE TABLE user_addresses (address_id INT, user_id INT);`,
+		`INSERT INTO address (street, street_number) VALUES ('rue Victor Hugo', 32);`,
+		`INSERT INTO address (street, street_number) VALUES ('boulevard de la République', 23);`,
+		`INSERT INTO address (street, street_number) VALUES ('rue Charles Martel', 5);`,
+		`INSERT INTO address (street, street_number) VALUES ('chemin du bout du monde ', 323);`,
+		`INSERT INTO address (street, street_number) VALUES ('boulevard de la liberté', 2);`,
+		`INSERT INTO address (street, street_number) VALUES ('avenue des champs', 12);`,
+		`INSERT INTO user_addresses (address_id, user_id) VALUES (2, 1);`,
+		`INSERT INTO user_addresses (address_id, user_id) VALUES (4, 1);`,
+		`INSERT INTO user_addresses (address_id, user_id) VALUES (2, 2);`,
+		`INSERT INTO user_addresses (address_id, user_id) VALUES (2, 3);`,
+		`INSERT INTO user_addresses (address_id, user_id) VALUES (4, 4);`,
+		`INSERT INTO user_addresses (address_id, user_id) VALUES (4, 5);`,
+	}
+
+	for _, b := range batch {
+		//fmt.Printf("Calling SQL with %s\n", b)
+		_, err := db.Exec(b)
+		if err != nil {
+			fmt.Printf("sql.Exec: Error: %s\n", err)
+		}
+	}
+
+	var wg sync.WaitGroup
+	wg.Add(10)
+	for i := 0; i < 10; i++ {
+		go func() {
+			rows, err := db.Query(`SELECT user_id FROM user_addresses;`)
+			if err != nil {
+				fmt.Printf("sql.Exec: Error: %s\n", err)
+			}
+			fmt.Printf("sql.OpenConnections() :%d\n", db.Stats().OpenConnections)
+			fmt.Printf("sql.MaxOpenConnections() :%d\n", db.Stats().MaxOpenConnections)
+
+			for rows.Next() {
+				var userId string
+				err := rows.Scan(&userId)
+				if err == nil {
+					//fmt.Printf("Rows userId: %d\n", userId)
+				}
+			}
+			wg.Done()
+		}()
+	}
+
+	wg.Wait()
+	fmt.Printf("Done\n")
+	c.IndentedJSON(http.StatusOK, okStatus)
 }
 
 func getOneAlbum(c *gin.Context) {
