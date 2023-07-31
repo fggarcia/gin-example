@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"gin-example/model"
+	"gin-example/util"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/goccy/go-json"
@@ -35,6 +36,17 @@ var (
 
 const (
 	okStatus = "{status: ok}"
+	albumStr = `{"id":"1","title":"Blue Train","artist":"John Coltrane","price":56.99}`
+	album2   = `{"id":"1","title":"The Dark Side of the Moon","artist":"Pink Floyd","price":10.99}`
+)
+
+var (
+	entityPool = &sync.Pool{
+		New: func() interface{} {
+			return &model.Album{}
+		},
+	}
+	album2Bytes = util.ToBytes(album2)
 )
 
 func main() {
@@ -47,6 +59,7 @@ func main() {
 	router.GET("/albums/get/:p", getOneAlbum)
 	router.GET("/albums/create/:count", createAlbums)
 	router.GET("/albums/delete/:count", deleteAlbums)
+	router.GET("/albums/sync", syncAlbums)
 	router.GET("/albums/cache", cacheSize)
 	router.GET("/albums/gc", gc)
 	router.GET("/albums/file/:filename", fromFiles)
@@ -54,6 +67,15 @@ func main() {
 	pprof.Register(router)
 	runtime.SetBlockProfileRate(1)
 	router.Run("localhost:8080")
+}
+
+func syncAlbums(c *gin.Context) {
+	albumPtr := entityPool.Get().(*model.Album)
+	defer entityPool.Put(albumPtr)
+
+	_ = json.Unmarshal(album2Bytes, albumPtr)
+	fmt.Printf("albumPtr: %v %p\n", albumPtr, albumPtr)
+	c.IndentedJSON(200, albumPtr)
 }
 
 func querySQL(c *gin.Context) {

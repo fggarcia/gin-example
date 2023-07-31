@@ -7,6 +7,7 @@ import (
 	gojson "github.com/goccy/go-json"
 	jsoniter "github.com/json-iterator/go"
 	segment "github.com/segmentio/encoding/json"
+	jettison "github.com/wI2L/jettison"
 	"strconv"
 	"testing"
 )
@@ -106,5 +107,21 @@ func BenchmarkAlbum_segment(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		segment.Marshal(album)
+	}
+}
+
+func BenchmarkAlbum_jettison(b *testing.B) {
+	album := &AlbumION{
+		ID:     strconv.Itoa(1),
+		Title:  "Blue Train",
+		Artist: "John Coltrane",
+		Price:  56.99,
+	}
+
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		jettison.Marshal(album)
 	}
 }
