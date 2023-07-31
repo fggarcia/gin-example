@@ -2,6 +2,7 @@ package gzip
 
 import (
 	"bytes"
+	"github.com/goccy/go-json"
 	"github.com/klauspost/compress/gzip"
 	//"compress/gzip"
 	"io"
@@ -14,10 +15,32 @@ const (
 
 var (
 	albumJSONBytes = []byte(albumJSON)
-	gzipAlbum, _   = zipValue(albumJSONBytes)
+
+	smallPayloadBytes    = generateNotRandomPayloadByte(64)
+	mediumPayloadBytes   = generateNotRandomPayloadByte(1024)
+	largePayloadBytes    = generateNotRandomPayloadByte(1024 * 1024)
+	gzipAlbum, _         = zipValue(albumJSONBytes)
+	gzipSmallPayload, _  = zipValue(smallPayloadBytes)
+	gzipMediumPayload, _ = zipValue(mediumPayloadBytes)
+	gzipLargePayload, _  = zipValue(largePayloadBytes)
 
 	readers sync.Pool
 )
+
+type Data struct {
+	Field string `json:"field"`
+}
+
+func generateNotRandomPayloadByte(size int) []byte {
+	var datas []Data
+	jsonStr := ""
+	for len(jsonStr) <= size {
+		datas = append(datas, Data{Field: "example"})
+		jsonData, _ := json.Marshal(datas)
+		jsonStr = string(jsonData)
+	}
+	return []byte(jsonStr)
+}
 
 func zipValue(b []byte) ([]byte, error) {
 	var buf bytes.Buffer
