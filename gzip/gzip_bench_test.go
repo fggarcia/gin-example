@@ -18,44 +18,58 @@ func BenchmarkWithPoolAlbum(b *testing.B) {
 	}
 }
 
-func BenchmarkWithoutPoolSmall(b *testing.B) {
+func Benchmark_WithoutPool_64b(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		unzipValue(gzipSmallPayload)
+		unzipValue(gzipPayload64b)
 	}
 }
 
-func BenchmarkWithPoolSmall(b *testing.B) {
+func Benchmark_WithPool_64b(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		unzipPoolValue(gzipSmallPayload)
+		unzipPoolValue(gzipPayload64b)
 	}
 }
 
-func BenchmarkWithoutPoolMedium(b *testing.B) {
+func Benchmark_WithoutPool_1k(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		unzipValue(gzipMediumPayload)
+		unzipValue(gzipPayload1k)
 	}
 }
 
-func BenchmarkWithPoolMedium(b *testing.B) {
+func Benchmark_WithPool_1k(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		unzipPoolValue(gzipMediumPayload)
+		unzipPoolValue(gzipPayload1k)
 	}
 }
 
-func BenchmarkWithoutPoolLarge(b *testing.B) {
+func Benchmark_WithoutPool_5k(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		unzipValue(gzipLargePayload)
+		unzipValue(gzipPayload5k)
 	}
 }
 
-func BenchmarkWithPoolLarge(b *testing.B) {
+func Benchmark_WithPool_5k(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		unzipPoolValue(gzipLargePayload)
+		unzipPoolValue(gzipPayload5k)
+	}
+}
+
+func Benchmark_WithoutPool_1M(b *testing.B) {
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		unzipValue(gzipPayload1M)
+	}
+}
+
+func Benchmark_WithPool_1M(b *testing.B) {
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		unzipPoolValue(gzipPayload1M)
 	}
 }

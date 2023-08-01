@@ -16,13 +16,15 @@ const (
 var (
 	albumJSONBytes = []byte(albumJSON)
 
-	smallPayloadBytes    = generateNotRandomPayloadByte(64)
-	mediumPayloadBytes   = generateNotRandomPayloadByte(1024)
-	largePayloadBytes    = generateNotRandomPayloadByte(1024 * 1024)
-	gzipAlbum, _         = zipValue(albumJSONBytes)
-	gzipSmallPayload, _  = zipValue(smallPayloadBytes)
-	gzipMediumPayload, _ = zipValue(mediumPayloadBytes)
-	gzipLargePayload, _  = zipValue(largePayloadBytes)
+	payload64Bytes    = generateNotRandomPayloadByte(64)
+	payload1kBytes    = generateNotRandomPayloadByte(1024)
+	payload5kBytes    = generateNotRandomPayloadByte(1024 * 5)
+	payload1MBytes    = generateNotRandomPayloadByte(1024 * 1024)
+	gzipAlbum, _      = zipValue(albumJSONBytes)
+	gzipPayload64b, _ = zipValue(payload64Bytes)
+	gzipPayload1k, _  = zipValue(payload1kBytes)
+	gzipPayload5k, _  = zipValue(payload5kBytes)
+	gzipPayload1M, _  = zipValue(payload1MBytes)
 
 	readers sync.Pool
 )
