@@ -46,6 +46,20 @@ func Benchmark_Search_WithPool(b *testing.B) {
 	}
 }
 
+func Benchmark_ItemKVS_WithoutPool(b *testing.B) {
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		unzipValue(gzipItemKVSGOJSON)
+	}
+}
+
+func Benchmark_ItemKVS_WithPool(b *testing.B) {
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		unzipPoolValue(gzipItemKVSGOJSON)
+	}
+}
+
 func Benchmark_64b_WithoutPool(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
