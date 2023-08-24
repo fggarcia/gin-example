@@ -1,11 +1,11 @@
 module gin-example
 
-go 1.20
+go 1.21
 
 require (
 	github.com/VictoriaMetrics/fastcache v1.12.1
 	github.com/amazon-ion/ion-go v1.2.0
-	github.com/bytedance/sonic v1.10.0-rc3
+	github.com/bytedance/sonic v1.10.0
 	github.com/gin-contrib/pprof v1.4.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/goccy/go-json v0.10.2
@@ -13,10 +13,11 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.16.7
 	github.com/mitchellh/copystructure v1.2.0
-	github.com/proullon/ramsql v0.0.1
+	github.com/proullon/ramsql v0.1.1
 	github.com/segmentio/encoding v0.3.6
 	github.com/stretchr/testify v1.8.4
 	github.com/wI2L/jettison v0.7.4
+	golang.org/x/sync v0.3.0
 )
 
 require (
@@ -28,7 +29,7 @@ require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.15.0 // indirect
+	github.com/go-playground/validator/v10 v10.15.1 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
@@ -43,6 +44,7 @@ require (
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	golang.org/x/arch v0.4.0 // indirect
 	golang.org/x/crypto v0.12.0 // indirect
+	golang.org/x/exp v0.0.0-20230817173708-d852ddb80c63 // indirect
 	golang.org/x/net v0.14.0 // indirect
 	golang.org/x/sys v0.11.0 // indirect
 	golang.org/x/text v0.12.0 // indirect
