@@ -11,7 +11,6 @@ import (
 	"github.com/goccy/go-json"
 	_ "github.com/proullon/ramsql/driver"
 	"sync"
-
 	//"encoding/json"
 	//"github.com/go-json-experiment/json"
 	//json "github.com/bytedance/sonic"
@@ -48,6 +47,28 @@ var (
 	}
 	album2Bytes = util.ToBytes(album2)
 )
+
+/*
+curl -v --max-time 3 -X GET 'http://localhost:8080/ping'
+func main() {
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		fmt.Printf("context: %+v\n", c.Request.Context())
+		time.Sleep(5 * time.Second)
+
+		select {
+		case <-c.Request.Context().Done():
+			fmt.Printf("client gave up: %v\n", c.Request.Context().Err())
+			// client gave up
+			return
+		}
+
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+	r.Run("127.0.0.1:8080")
+}*/
 
 func main() {
 	//db.SetMaxOpenConns(1)
