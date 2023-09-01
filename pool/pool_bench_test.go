@@ -19,6 +19,7 @@ var (
 			return &model.Album{}
 		},
 	}
+	zeroPool    = New[model.Album](func() model.Album { return model.Album{} })
 	album2Bytes = util.ToBytes(albumStr)
 )
 
@@ -31,6 +32,20 @@ func BenchmarkPool(b *testing.B) {
 		for j := 0; j < iter; j++ {
 			album = entityPool.Get().(*model.Album)
 			json.Unmarshal(album2Bytes, album)
+			entityPool.Put(album)
+		}
+	}
+}
+
+func BenchmarkZeroPool(b *testing.B) {
+	var album model.Album
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		for j := 0; j < iter; j++ {
+			album = zeroPool.Get()
+			json.Unmarshal(album2Bytes, &album)
 			entityPool.Put(album)
 		}
 	}
