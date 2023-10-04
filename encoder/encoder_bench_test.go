@@ -13,17 +13,19 @@ func BenchmarkEncoder(b *testing.B) {
 		Artist: "artist",
 		Price:  9.99,
 	}
-	b.ResetTimer()
+
 	b.Run("generic", func(b *testing.B) {
 		b.ReportAllocs()
+		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
 			encoded, _ := encoder.Encode(album)
 			doSomethingEncoded(encoded)
 		}
 	})
-	b.ResetTimer()
+
 	b.Run("old", func(b *testing.B) {
 		b.ReportAllocs()
+		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
 			encoded, _ := oldEncoder(album)
 			doSomethingEncoded(encoded)
@@ -40,16 +42,25 @@ func BenchmarkDecoder(b *testing.B) {
 		Price:  9.99,
 	}
 	encoded, _ := encoder.Encode(album)
-	b.ResetTimer()
 	b.Run("generic", func(b *testing.B) {
+		b.ResetTimer()
 		b.ReportAllocs()
 		for i := 0; i < b.N; i++ {
 			decoded, _ := encoder.Decode(encoded)
 			doSomethingDecoded(decoded)
 		}
 	})
-	b.ResetTimer()
+	b.Run("generic_stack", func(b *testing.B) {
+		b.ResetTimer()
+		b.ReportAllocs()
+		for i := 0; i < b.N; i++ {
+			var instance model.Album
+			encoder.DecodeTo(encoded, &instance)
+			doSomethingDecoded(&instance)
+		}
+	})
 	b.Run("old", func(b *testing.B) {
+		b.ResetTimer()
 		b.ReportAllocs()
 		for i := 0; i < b.N; i++ {
 			decoded, _ := oldDecoder(encoded)
