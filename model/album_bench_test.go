@@ -4,6 +4,7 @@ import (
 	json "encoding/json"
 	"github.com/amazon-ion/ion-go/ion"
 	"github.com/bytedance/sonic"
+	jsonv2 "github.com/go-json-experiment/json"
 	gojson "github.com/goccy/go-json"
 	jsoniter "github.com/json-iterator/go"
 	segment "github.com/segmentio/encoding/json"
@@ -91,6 +92,14 @@ func BenchmarkAlbumMarshal(b *testing.B) {
 
 		for i := 0; i < b.N; i++ {
 			sonnet.Marshal(album)
+		}
+	})
+	b.Run("jsonV2", func(b *testing.B) {
+		b.ReportAllocs()
+		b.ResetTimer()
+
+		for i := 0; i < b.N; i++ {
+			jsonv2.Marshal(album)
 		}
 	})
 }
