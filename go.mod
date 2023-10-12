@@ -1,6 +1,6 @@
 module gin-example
 
-go 1.21.0
+go 1.21.3
 
 require (
 	github.com/VictoriaMetrics/fastcache v1.12.1
