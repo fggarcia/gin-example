@@ -9,8 +9,12 @@ import (
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/goccy/go-json"
+	gpprof "github.com/google/pprof/profile"
 	_ "github.com/proullon/ramsql/driver"
+	"regexp"
 	"sync"
+	"time"
+
 	//"encoding/json"
 	//"github.com/go-json-experiment/json"
 	//json "github.com/bytedance/sonic"
@@ -85,9 +89,29 @@ func main() {
 	router.GET("/albums/gc", gc)
 	router.GET("/albums/file/:filename", fromFiles)
 	router.GET("/albums/file_fast_cache/:filename", fromFilesFastCache)
+	router.GET("/albums/pprof", pprofFile)
 	pprof.Register(router)
 	runtime.SetBlockProfileRate(1)
 	router.Run("localhost:8080")
+}
+
+var cpuRegex = regexp.MustCompile("^regexp\\.MustCompile$")
+
+func pprofFile(c *gin.Context) {
+	f, err := os.Open("cpu.out")
+	if err != nil {
+		log.Fatal("error reading cpu.out", err)
+	}
+	defer f.Close()
+
+	p, err := gpprof.Parse(f)
+	fm, im, hm, hnm := p.FilterSamplesByName(cpuRegex, nil, nil, cpuRegex)
+
+	var pprofDuration time.Duration = time.Duration(p.DurationNanos)
+	log.Printf("pprofDuration: %v\n", pprofDuration.Seconds())
+	log.Printf("fm: %v im: %v hm: %v hnm: %v\n", fm, im, hm, hnm)
+
+	c.IndentedJSON(200, "OK")
 }
 
 func syncAlbums(c *gin.Context) {

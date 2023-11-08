@@ -1,6 +1,6 @@
 module gin-example
 
-go 1.21.3
+go 1.21.4
 
 require (
 	github.com/VictoriaMetrics/fastcache v1.12.1
@@ -11,6 +11,7 @@ require (
 	github.com/go-json-experiment/json v0.0.0-20231102232822-2e55bd4e08b0
 	github.com/goccy/go-json v0.10.2
 	github.com/google/go-cmp v0.6.0
+	github.com/google/pprof v0.0.0-20231101202521-4ca4178f5c7a
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.17.2
 	github.com/mitchellh/copystructure v1.2.0
@@ -45,9 +46,9 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	golang.org/x/arch v0.6.0 // indirect
-	golang.org/x/crypto v0.14.0 // indirect
+	golang.org/x/crypto v0.15.0 // indirect
 	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
-	golang.org/x/net v0.17.0 // indirect
+	golang.org/x/net v0.18.0 // indirect
 	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
