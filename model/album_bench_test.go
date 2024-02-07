@@ -68,7 +68,7 @@ func BenchmarkAlbumMarshal(b *testing.B) {
 		}
 	})
 
-	b.Run("segment", func(b *testing.B) {
+	b.Run("segmentio", func(b *testing.B) {
 		b.ReportAllocs()
 		b.ResetTimer()
 
