@@ -64,3 +64,48 @@ func BenchmarkKibana(b *testing.B) {
 		}
 	})
 }
+
+func BenchmarkBuildKey(b *testing.B) {
+	b.Run("fmt.Sprintf", func(b *testing.B) {
+		b.ReportAllocs()
+		for i := 0; i < b.N; i++ {
+			consumeString(fmtSprintf(strconv.Itoa(i)))
+		}
+	})
+	b.Run("slice", func(b *testing.B) {
+		b.ReportAllocs()
+		for i := 0; i < b.N; i++ {
+			consumeString(sliceCompose(strconv.Itoa(i)))
+		}
+	})
+	b.Run("concatStringBuilder", func(b *testing.B) {
+		b.ReportAllocs()
+		for i := 0; i < b.N; i++ {
+			consumeString(concatStringBuilder(strconv.Itoa(i)))
+		}
+	})
+}
+
+func consumeString(str string) string {
+	return str
+}
+
+func BenchmarkRegex(b *testing.B) {
+	value := "value"
+	b.Run("slice", func(b *testing.B) {
+		b.ReportAllocs()
+		cache := NewRegexCache(createRegexCompose)
+		for i := 0; i < b.N; i++ {
+			regex := cache.Get(value)
+			consumeString(regex.String())
+		}
+	})
+	b.Run("fmt.Sprintf", func(b *testing.B) {
+		b.ReportAllocs()
+		cache := NewRegexCache(createRegexFmt)
+		for i := 0; i < b.N; i++ {
+			regex := cache.Get(value)
+			consumeString(regex.String())
+		}
+	})
+}
