@@ -5,13 +5,13 @@ go 1.22.4
 require (
 	github.com/VictoriaMetrics/fastcache v1.12.2
 	github.com/amazon-ion/ion-go v1.5.0
-	github.com/bytedance/sonic v1.11.8
+	github.com/bytedance/sonic v1.11.9
 	github.com/gin-contrib/pprof v1.5.0
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-json-experiment/json v0.0.0-20240524174822-2d9f40f7385b
 	github.com/goccy/go-json v0.10.3
 	github.com/google/go-cmp v0.6.0
-	github.com/google/pprof v0.0.0-20240528025155-186aa0362fba
+	github.com/google/pprof v0.0.0-20240622144329-c177fd99eaa9
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.17.9
 	github.com/mitchellh/copystructure v1.2.0
