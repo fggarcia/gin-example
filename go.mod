@@ -1,11 +1,11 @@
 module gin-example
 
-go 1.22.5
+go 1.23rc2
 
 require (
 	github.com/VictoriaMetrics/fastcache v1.12.2
 	github.com/amazon-ion/ion-go v1.5.0
-	github.com/apache/fury/go/fury v0.0.0-20240724122043-7b6e9ed5b547
+	github.com/apache/fury/go/fury v0.0.0-20240803162106-407b65820fa3
 	github.com/bytedance/sonic v1.12.0
 	github.com/gin-contrib/pprof v1.5.0
 	github.com/gin-gonic/gin v1.10.0
