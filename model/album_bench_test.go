@@ -3,6 +3,7 @@ package model
 import (
 	json "encoding/json"
 	"github.com/amazon-ion/ion-go/ion"
+	fury "github.com/apache/fury/go/fury"
 	"github.com/bytedance/sonic"
 	jsonv2 "github.com/go-json-experiment/json"
 	gojson "github.com/goccy/go-json"
@@ -100,6 +101,19 @@ func BenchmarkAlbumMarshal(b *testing.B) {
 
 		for i := 0; i < b.N; i++ {
 			jsonv2.Marshal(album)
+		}
+	})
+	b.Run("fury", func(b *testing.B) {
+		fury := fury.NewFury(true)
+		if err := fury.RegisterTagType("album_bench_test.AlbumION", AlbumION{}); err != nil {
+			panic(err)
+		}
+
+		b.ReportAllocs()
+		b.ResetTimer()
+
+		for i := 0; i < b.N; i++ {
+			fury.Marshal(album)
 		}
 	})
 }
