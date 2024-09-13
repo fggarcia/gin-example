@@ -6,7 +6,12 @@ import (
 	"strconv"
 	"sync"
 	"testing"
+	"time"
 )
+
+type internalTask struct {
+	wg *sync.WaitGroup
+}
 
 var totalTasks = 10
 
@@ -40,30 +45,30 @@ func Benchmark(b *testing.B) {
 	b.Run("work-pattern", func(b *testing.B) {
 		b.ReportAllocs()
 		var workerCount = 5 // number of workers
+		tasks := make(chan internalTask, totalTasks)
+		for k := 0; k < workerCount; k++ {
+			go func() {
+				for it := range tasks {
+					var item Album
+					err := toJsonEncode(&item, bytes)
+					if err != nil {
+						b.Error(err)
+						return
+					}
+					doSomething(&item)
+					it.wg.Done()
+				}
+			}()
+		}
 		for i := 0; i < b.N; i++ {
 			var wg sync.WaitGroup
-			tasks := make(chan int, totalTasks)
-			for i := 0; i < workerCount; i++ {
-				wg.Add(1)
-				go func() {
-					defer wg.Done()
-					for range tasks {
-						var item Album
-						err := toJsonEncode(&item, bytes)
-						if err != nil {
-							b.Error(err)
-							return
-						}
-						doSomething(&item)
-					}
-				}()
+			wg.Add(totalTasks)
+			for j := 0; j < totalTasks; j++ {
+				tasks <- internalTask{&wg}
 			}
-			for i := 0; i < totalTasks; i++ {
-				tasks <- i
-			}
-			close(tasks)
 			wg.Wait()
 		}
+		close(tasks)
 	})
 	b.Run("Singleflight", func(b *testing.B) {
 		b.ReportAllocs()
@@ -71,7 +76,7 @@ func Benchmark(b *testing.B) {
 			var g singleflight.Group
 			var wg sync.WaitGroup
 			wg.Add(totalTasks)
-			for i := 0; i < totalTasks; i++ {
+			for j := 0; j < totalTasks; j++ {
 				go func() {
 					g.Do("key", func() (interface{}, error) {
 						var item Album
@@ -88,5 +93,5 @@ func Benchmark(b *testing.B) {
 }
 
 func doSomething(entity *Album) {
-
+	time.Sleep(10 * time.Millisecond)
 }
