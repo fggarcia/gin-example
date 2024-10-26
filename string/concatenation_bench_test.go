@@ -84,6 +84,12 @@ func BenchmarkBuildKey(b *testing.B) {
 			consumeString(concatStringBuilder(strconv.Itoa(i)))
 		}
 	})
+	b.Run("simpleConcat", func(b *testing.B) {
+		b.ReportAllocs()
+		for i := 0; i < b.N; i++ {
+			consumeString(simpleConcat(strconv.Itoa(i)))
+		}
+	})
 }
 
 func consumeString(str string) string {
