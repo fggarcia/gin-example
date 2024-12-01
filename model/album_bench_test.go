@@ -11,6 +11,7 @@ import (
 	segment "github.com/segmentio/encoding/json"
 	sonnet "github.com/sugawarayuuta/sonnet"
 	jettison "github.com/wI2L/jettison"
+	"reflect"
 	"strconv"
 	"testing"
 )
@@ -61,6 +62,7 @@ func BenchmarkAlbumMarshal(b *testing.B) {
 	})
 
 	b.Run("sonic", func(b *testing.B) {
+		sonic.Pretouch(reflect.TypeOf(album))
 		b.ReportAllocs()
 		b.ResetTimer()
 

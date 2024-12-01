@@ -6,14 +6,14 @@ require (
 	github.com/KimMachineGun/automemlimit v0.6.1
 	github.com/VictoriaMetrics/fastcache v1.12.2
 	github.com/amazon-ion/ion-go v1.5.0
-	github.com/apache/fury/go/fury v0.0.0-20241025175251-a45886efe81b
-	github.com/bytedance/sonic v1.12.3
-	github.com/gin-contrib/pprof v1.5.0
+	github.com/apache/fury/go/fury v0.0.0-20241103154821-bce372e57d94
+	github.com/bytedance/sonic v1.12.5
+	github.com/gin-contrib/pprof v1.5.1
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-json-experiment/json v0.0.0-20240815175050-ebd3a8989ca1
 	github.com/goccy/go-json v0.10.3
 	github.com/google/go-cmp v0.6.0
-	github.com/google/pprof v0.0.0-20241023014458-598669927662
+	github.com/google/pprof v0.0.0-20241128161848-dc51965c6481
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.17.11
 	github.com/mitchellh/copystructure v1.2.0
@@ -22,7 +22,7 @@ require (
 	github.com/stretchr/testify v1.9.0
 	github.com/sugawarayuuta/sonnet v0.0.0-20231004000330-239c7b6e4ce8
 	github.com/wI2L/jettison v0.7.4
-	golang.org/x/sync v0.8.0
+	golang.org/x/sync v0.9.0
 )
 
 require (
@@ -35,14 +35,14 @@ require (
 	github.com/coreos/go-systemd/v22 v22.5.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
-	github.com/gabriel-vasile/mimetype v1.4.6 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.7 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.22.1 // indirect
+	github.com/go-playground/validator/v10 v10.23.0 // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/klauspost/cpuid/v2 v2.2.8 // indirect
+	github.com/klauspost/cpuid/v2 v2.2.9 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
@@ -56,12 +56,12 @@ require (
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
-	golang.org/x/arch v0.11.0 // indirect
-	golang.org/x/crypto v0.28.0 // indirect
-	golang.org/x/exp v0.0.0-20241009180824-f66d83c29e7c // indirect
-	golang.org/x/net v0.30.0 // indirect
-	golang.org/x/sys v0.26.0 // indirect
-	golang.org/x/text v0.19.0 // indirect
-	google.golang.org/protobuf v1.35.1 // indirect
+	golang.org/x/arch v0.12.0 // indirect
+	golang.org/x/crypto v0.29.0 // indirect
+	golang.org/x/exp v0.0.0-20241108190413-2d47ceb2692f // indirect
+	golang.org/x/net v0.31.0 // indirect
+	golang.org/x/sys v0.27.0 // indirect
+	golang.org/x/text v0.20.0 // indirect
+	google.golang.org/protobuf v1.35.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
