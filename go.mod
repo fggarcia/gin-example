@@ -6,23 +6,23 @@ require (
 	github.com/KimMachineGun/automemlimit v0.6.1
 	github.com/VictoriaMetrics/fastcache v1.12.2
 	github.com/amazon-ion/ion-go v1.5.0
-	github.com/apache/fury/go/fury v0.0.0-20241103154821-bce372e57d94
-	github.com/bytedance/sonic v1.12.5
-	github.com/gin-contrib/pprof v1.5.1
+	github.com/apache/fury/go/fury v0.0.0-20241223022946-8d2d1240825c
+	github.com/bytedance/sonic v1.12.6
+	github.com/gin-contrib/pprof v1.5.2
 	github.com/gin-gonic/gin v1.10.0
-	github.com/go-json-experiment/json v0.0.0-20240815175050-ebd3a8989ca1
-	github.com/goccy/go-json v0.10.3
+	github.com/go-json-experiment/json v0.0.0-20241222003016-5815faae9dc0
+	github.com/goccy/go-json v0.10.4
 	github.com/google/go-cmp v0.6.0
-	github.com/google/pprof v0.0.0-20241128161848-dc51965c6481
+	github.com/google/pprof v0.0.0-20241210010833-40e02aabc2ad
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.17.11
 	github.com/mitchellh/copystructure v1.2.0
 	github.com/proullon/ramsql v0.1.4
-	github.com/segmentio/encoding v0.4.0
-	github.com/stretchr/testify v1.9.0
+	github.com/segmentio/encoding v0.4.1
+	github.com/stretchr/testify v1.10.0
 	github.com/sugawarayuuta/sonnet v0.0.0-20231004000330-239c7b6e4ce8
 	github.com/wI2L/jettison v0.7.4
-	golang.org/x/sync v0.9.0
+	golang.org/x/sync v0.10.0
 )
 
 require (
@@ -57,11 +57,11 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	golang.org/x/arch v0.12.0 // indirect
-	golang.org/x/crypto v0.29.0 // indirect
-	golang.org/x/exp v0.0.0-20241108190413-2d47ceb2692f // indirect
-	golang.org/x/net v0.31.0 // indirect
-	golang.org/x/sys v0.27.0 // indirect
-	golang.org/x/text v0.20.0 // indirect
-	google.golang.org/protobuf v1.35.2 // indirect
+	golang.org/x/crypto v0.31.0 // indirect
+	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67 // indirect
+	golang.org/x/net v0.33.0 // indirect
+	golang.org/x/sys v0.28.0 // indirect
+	golang.org/x/text v0.21.0 // indirect
+	google.golang.org/protobuf v1.36.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
