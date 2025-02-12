@@ -52,14 +52,16 @@ var mockEntity = func() map[string][]string {
 func BenchmarkKibana(b *testing.B) {
 	b.Run("concatenation", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			concatenation(mockEntity)
 		}
 	})
 
 	b.Run("stringBuilder", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			stringBuilder(mockEntity)
 		}
 	})
@@ -68,25 +70,29 @@ func BenchmarkKibana(b *testing.B) {
 func BenchmarkBuildKey(b *testing.B) {
 	b.Run("fmt.Sprintf", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			consumeString(fmtSprintf(strconv.Itoa(i)))
 		}
 	})
 	b.Run("slice", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			consumeString(sliceCompose(strconv.Itoa(i)))
 		}
 	})
 	b.Run("concatStringBuilder", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			consumeString(concatStringBuilder(strconv.Itoa(i)))
 		}
 	})
 	b.Run("simpleConcat", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			consumeString(simpleConcat(strconv.Itoa(i)))
 		}
 	})
@@ -101,7 +107,8 @@ func BenchmarkRegex(b *testing.B) {
 	b.Run("slice", func(b *testing.B) {
 		b.ReportAllocs()
 		cache := NewRegexCache(createRegexCompose)
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			regex := cache.Get(value)
 			consumeString(regex.String())
 		}
@@ -109,7 +116,8 @@ func BenchmarkRegex(b *testing.B) {
 	b.Run("fmt.Sprintf", func(b *testing.B) {
 		b.ReportAllocs()
 		cache := NewRegexCache(createRegexFmt)
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			regex := cache.Get(value)
 			consumeString(regex.String())
 		}

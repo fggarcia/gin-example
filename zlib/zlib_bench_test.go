@@ -8,8 +8,8 @@ import (
 func BenchmarkZlibEncoder(b *testing.B) {
 	b.Run("flush", func(b *testing.B) {
 		b.ReportAllocs()
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			bytes, err := zlibEncodeFlush(itemKVSJsonBytes)
 			if err != nil {
 				fmt.Printf("err: %v\n", err)
@@ -19,8 +19,8 @@ func BenchmarkZlibEncoder(b *testing.B) {
 	})
 	b.Run("close", func(b *testing.B) {
 		b.ReportAllocs()
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			bytes, err := zlibEncodeClose(itemKVSJsonBytes)
 			if err != nil {
 				fmt.Printf("err: %v\n", err)
@@ -30,8 +30,8 @@ func BenchmarkZlibEncoder(b *testing.B) {
 	})
 	b.Run("old", func(b *testing.B) {
 		b.ReportAllocs()
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			bytes, err := zlibEncode2(itemKVSJsonBytes)
 			if err != nil {
 				fmt.Printf("err: %v\n", err)

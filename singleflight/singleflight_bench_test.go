@@ -28,7 +28,8 @@ func Benchmark(b *testing.B) {
 	b.ResetTimer()
 	b.Run("default", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			var wg sync.WaitGroup
 			wg.Add(totalTasks)
 			for i := 0; i < totalTasks; i++ {
@@ -60,7 +61,8 @@ func Benchmark(b *testing.B) {
 				}
 			}()
 		}
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			var wg sync.WaitGroup
 			wg.Add(totalTasks)
 			for j := 0; j < totalTasks; j++ {
@@ -72,7 +74,8 @@ func Benchmark(b *testing.B) {
 	})
 	b.Run("Singleflight", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			var g singleflight.Group
 			var wg sync.WaitGroup
 			wg.Add(totalTasks)

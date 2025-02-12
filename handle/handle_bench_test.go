@@ -18,9 +18,8 @@ func BenchmarkHandle(b *testing.B) {
 		}
 
 		b.ReportAllocs()
-		b.ResetTimer()
 
-		for i := 0; i < b.N; i++ {
+		for b.Loop() {
 			imod = i % 10
 			h = unique.Make(buildStr(imod))
 			consumeBool(handleMap[imod] == h)
@@ -36,6 +35,7 @@ func BenchmarkHandle(b *testing.B) {
 
 		b.ReportAllocs()
 		b.ResetTimer()
+
 		for i := 0; i < b.N; i++ {
 			imod = i % 10
 			str = buildStr(imod)

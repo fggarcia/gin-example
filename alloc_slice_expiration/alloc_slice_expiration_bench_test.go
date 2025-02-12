@@ -43,19 +43,19 @@ func BenchmarkExpirationToSlice(b *testing.B) {
 	var timeNow = time.Now()
 	b.Run("heap", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+		for b.Loop() {
 			_ = expirationToSlicePtr(timeNow)
 		}
 	})
 	b.Run("stack", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+		for b.Loop() {
 			_ = expirationToSlice(timeNow)
 		}
 	})
 	b.Run("ref", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+		for b.Loop() {
 			var buf = make([]byte, binary.MaxVarintLen64)
 			_ = expirationToSliceRef(&buf, timeNow)
 		}

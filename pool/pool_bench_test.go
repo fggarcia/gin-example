@@ -26,9 +26,8 @@ var (
 func BenchmarkPool(b *testing.B) {
 	var album *model.Album
 	b.ReportAllocs()
-	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		for j := 0; j < iter; j++ {
 			album = entityPool.Get().(*model.Album)
 			json.Unmarshal(album2Bytes, album)
@@ -40,9 +39,8 @@ func BenchmarkPool(b *testing.B) {
 func BenchmarkZeroPool(b *testing.B) {
 	var album model.Album
 	b.ReportAllocs()
-	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		for j := 0; j < iter; j++ {
 			album = zeroPool.Get()
 			json.Unmarshal(album2Bytes, &album)
@@ -53,9 +51,8 @@ func BenchmarkZeroPool(b *testing.B) {
 
 func BenchmarkNoPool(b *testing.B) {
 	b.ReportAllocs()
-	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		for j := 0; j < iter; j++ {
 			album := new(model.Album)
 			json.Unmarshal(album2Bytes, album)

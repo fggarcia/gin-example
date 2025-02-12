@@ -3,19 +3,21 @@ package fields
 import "testing"
 
 func BenchmarkItemOmitEmptyTag(b *testing.B) {
-	s := Person{}
-	b.ResetTimer()
 	b.ReportAllocs()
-	for i := 0; i < b.N; i++ {
+
+	s := Person{}
+
+	for b.Loop() {
 		ItemStructField(s)
 	}
 }
 
 func BenchmarkCustomOmitEmptyTag(b *testing.B) {
-	s := Person{}
-	b.ResetTimer()
 	b.ReportAllocs()
-	for i := 0; i < b.N; i++ {
+
+	s := Person{}
+
+	for b.Loop() {
 		CustomStructField(s)
 	}
 }

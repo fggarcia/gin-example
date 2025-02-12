@@ -28,7 +28,8 @@ func BenchmarkEncodingAlloc(b *testing.B) {
 
 	b.Run("pre_stack", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			albumInstance := model.Album{}
 			_ = NewFromStack(encoded, &albumInstance)
 			doSomething(&albumInstance)
@@ -36,7 +37,8 @@ func BenchmarkEncodingAlloc(b *testing.B) {
 	})
 	b.Run("pre_stack_2", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			albumPtr := new(model.Album)
 			_ = NewFromStack(encoded, albumPtr)
 			doSomething(albumPtr)
@@ -44,7 +46,8 @@ func BenchmarkEncodingAlloc(b *testing.B) {
 	})
 	b.Run("from_heap", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			albumPtr := NewFromHeap(encoded)
 			doSomething(albumPtr)
 		}

@@ -11,7 +11,7 @@ const (
 func BenchmarkMapAllocation(b *testing.B) {
 	b.Run("DynamicGrowth", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+		for b.Loop() {
 			m := make(map[int]int)
 			for j := 0; j < numItems; j++ {
 				m[j] = j
@@ -21,7 +21,7 @@ func BenchmarkMapAllocation(b *testing.B) {
 
 	b.Run("PrecalculatedSize", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+		for b.Loop() {
 			m := make(map[int]int, numItems)
 			for j := 0; j < numItems; j++ {
 				m[j] = j

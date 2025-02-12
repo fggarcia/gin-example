@@ -25,8 +25,7 @@ func BenchmarkSliceIteration(b *testing.B) {
 	}
 
 	b.Run("Range", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
+		for b.Loop() {
 			sum := 0
 			for _, v := range slice {
 				sum += v.Field1 + v.Field10 + v.Field20
@@ -35,8 +34,7 @@ func BenchmarkSliceIteration(b *testing.B) {
 	})
 
 	b.Run("For with len", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
+		for b.Loop() {
 			sum := 0
 			for j := 0; j < len(slice); j++ {
 				sum += slice[j].Field1 + slice[j].Field10 + slice[j].Field20
@@ -45,8 +43,7 @@ func BenchmarkSliceIteration(b *testing.B) {
 	})
 
 	b.Run("For with constant", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
+		for b.Loop() {
 			sum := 0
 			for j := 0; j < 1024; j++ {
 				sum += slice[j].Field1 + slice[j].Field10 + slice[j].Field20

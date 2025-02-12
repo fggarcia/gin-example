@@ -24,7 +24,8 @@ var (
 
 func BenchmarkUnmarshalAlbum(b *testing.B) {
 	b.ReportAllocs()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		album := &model.Album{}
 		err := json.Unmarshal(album2Bytes, &album)
 		if err != nil {
@@ -35,7 +36,8 @@ func BenchmarkUnmarshalAlbum(b *testing.B) {
 
 func BenchmarkUnmarshalSyncAlbum(b *testing.B) {
 	b.ReportAllocs()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		albumPtr := entityPool.Get().(*model.Album)
 		err := json.Unmarshal(album2Bytes, albumPtr)
 		if err != nil {
@@ -47,7 +49,8 @@ func BenchmarkUnmarshalSyncAlbum(b *testing.B) {
 
 func BenchmarkUnmarshalSyncAlbum2(b *testing.B) {
 	b.ReportAllocs()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		albumPtr := entityPool.Get().(*model.Album)
 		err := segmentio.Unmarshal(album2Bytes, albumPtr)
 		if err != nil {

@@ -29,8 +29,8 @@ func BenchmarkForRangeCopy(b *testing.B) {
 	}
 
 	var result HeavyStruct // Usamos esto para asegurarnos de que las copias no sean optimizadas
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		for _, item := range slice {
 			result = item // Copia explícita para evitar optimizaciones
 		}
@@ -50,8 +50,8 @@ func BenchmarkForRangeIdx(b *testing.B) {
 	}
 
 	var result HeavyStruct // Usamos esto para asegurarnos de que las copias no sean optimizadas
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		for idx := range slice {
 			result = slice[idx] // Copia explícita para evitar optimizaciones
 		}
@@ -73,8 +73,8 @@ func BenchmarkForRangePointer(b *testing.B) {
 	}
 
 	var result *HeavyStruct // Usamos esto para asegurarnos de que los accesos no sean optimizados
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		for _, item := range slice {
 			result = item // Acceso directo a punteros
 		}
@@ -96,8 +96,8 @@ func BenchmarkForRangeByIndex(b *testing.B) {
 
 	var result HeavyStruct
 	// Benchmark
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		for idx := 0; idx < len(slice); idx++ {
 			result = slice[idx] // Simula el uso del valor (evita que el compilador lo optimice fuera)
 		}

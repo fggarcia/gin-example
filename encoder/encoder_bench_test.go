@@ -16,8 +16,8 @@ func BenchmarkEncoder(b *testing.B) {
 
 	b.Run("generic", func(b *testing.B) {
 		b.ReportAllocs()
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			encoded, _ := encoder.Encode(album)
 			doSomethingEncoded(encoded)
 		}
@@ -25,8 +25,8 @@ func BenchmarkEncoder(b *testing.B) {
 
 	b.Run("old", func(b *testing.B) {
 		b.ReportAllocs()
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			encoded, _ := oldEncoder(album)
 			doSomethingEncoded(encoded)
 		}
@@ -43,26 +43,26 @@ func BenchmarkDecoder(b *testing.B) {
 	}
 	encoded, _ := encoder.Encode(album)
 	b.Run("generic", func(b *testing.B) {
-		b.ResetTimer()
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			decoded, _ := encoder.Decode(encoded)
 			doSomethingDecoded(decoded)
 		}
 	})
 	b.Run("generic_stack", func(b *testing.B) {
-		b.ResetTimer()
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			var instance model.Album
 			encoder.DecodeTo(encoded, &instance)
 			doSomethingDecoded(&instance)
 		}
 	})
 	b.Run("old", func(b *testing.B) {
-		b.ResetTimer()
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			decoded, _ := oldDecoder(encoded)
 			doSomethingDecoded(decoded)
 		}

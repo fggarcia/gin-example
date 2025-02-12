@@ -25,37 +25,43 @@ func createSliceConst() []byte {
 func BenchmarkAlloc(b *testing.B) {
 	b.Run("const_number", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			_ = make([]byte, 512)
 		}
 	})
 	b.Run("const_var", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			_ = make([]byte, allocNumberConst)
 		}
 	})
 	b.Run("var", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			_ = make([]byte, allocNumber)
 		}
 	})
 	b.Run("func_const_number", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			_ = createSliceConstNumber()
 		}
 	})
 	b.Run("func_const_var", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			_ = createSliceConst()
 		}
 	})
 	b.Run("func_var", func(b *testing.B) {
 		b.ReportAllocs()
-		for i := 0; i < b.N; i++ {
+
+		for b.Loop() {
 			_ = createSliceVar()
 		}
 	})
