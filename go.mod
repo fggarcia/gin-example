@@ -1,19 +1,19 @@
 module gin-example
 
-go 1.24.1
+go 1.24.2
 
 require (
 	github.com/KimMachineGun/automemlimit v0.7.1
 	github.com/VictoriaMetrics/fastcache v1.12.2
 	github.com/amazon-ion/ion-go v1.5.0
-	github.com/apache/fury/go/fury v0.0.0-20250301070546-ecc3347066c0
-	github.com/bytedance/sonic v1.13.1
-	github.com/gin-contrib/pprof v1.5.2
+	github.com/apache/fury/go/fury v0.0.0-20250406144312-c19bafd4c95f
+	github.com/bytedance/sonic v1.13.2
+	github.com/gin-contrib/pprof v1.5.3
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-json-experiment/json v0.0.0-20250223041408-d3c622f1b874
 	github.com/goccy/go-json v0.10.5
 	github.com/google/go-cmp v0.7.0
-	github.com/google/pprof v0.0.0-20250302191652-9094ed2288e7
+	github.com/google/pprof v0.0.0-20250403155104-27863c87afa6
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.18.0
 	github.com/mitchellh/copystructure v1.2.0
@@ -22,7 +22,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/sugawarayuuta/sonnet v0.0.0-20231004000330-239c7b6e4ce8
 	github.com/wI2L/jettison v0.7.4
-	golang.org/x/sync v0.12.0
+	golang.org/x/sync v0.13.0
 )
 
 require (
@@ -34,7 +34,7 @@ require (
 	github.com/gin-contrib/sse v1.0.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.25.0 // indirect
+	github.com/go-playground/validator/v10 v10.26.0 // indirect
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.10 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
@@ -48,12 +48,12 @@ require (
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
-	golang.org/x/arch v0.15.0 // indirect
-	golang.org/x/crypto v0.36.0 // indirect
+	golang.org/x/arch v0.16.0 // indirect
+	golang.org/x/crypto v0.37.0 // indirect
 	golang.org/x/exp v0.0.0-20250305212735-054e65f0b394 // indirect
-	golang.org/x/net v0.37.0 // indirect
-	golang.org/x/sys v0.31.0 // indirect
-	golang.org/x/text v0.23.0 // indirect
-	google.golang.org/protobuf v1.36.5 // indirect
+	golang.org/x/net v0.38.0 // indirect
+	golang.org/x/sys v0.32.0 // indirect
+	golang.org/x/text v0.24.0 // indirect
+	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
