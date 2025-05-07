@@ -8,6 +8,8 @@ github.com/amazon-ion/ion-go v1.5.0 h1:fxsAyFda8N9HsM2xYbQSxJ3Qi/oLn0xzLoiXWG3bs
 github.com/amazon-ion/ion-go v1.5.0/go.mod h1:3ZEje8i20TiIPVZlN+KE3B2ppZ1B8d9F/KaT7Dtec+k=
 github.com/apache/fury/go/fury v0.0.0-20250424141711-dd3edef18cf9 h1:zeW9EjZlltyp9Xcqx6BazmBy775IwvNr/u12nKt8DRE=
 github.com/apache/fury/go/fury v0.0.0-20250424141711-dd3edef18cf9/go.mod h1:l/JazP6Jn/zJrhj/+DCXcvwk0QvubRhPzYJjgnoK3Vk=
+github.com/apache/fury/go/fury v0.0.0-20250506115919-63b072b20396 h1:X+Y5qR+DMKzLF1FGrksZR4jcPze1YV/OADSW0n62SlE=
+github.com/apache/fury/go/fury v0.0.0-20250506115919-63b072b20396/go.mod h1:l/JazP6Jn/zJrhj/+DCXcvwk0QvubRhPzYJjgnoK3Vk=
 github.com/bytedance/sonic v1.13.2 h1:8/H1FempDZqC4VqjptGo14QQlJx8VdZJegxs6wwfqpQ=
 github.com/bytedance/sonic v1.13.2/go.mod h1:o68xyaF9u2gvVBuGHPlUVCy+ZfmNNO5ETf1+KgkJhz4=
 github.com/bytedance/sonic/loader v0.1.1/go.mod h1:ncP89zfokxS5LZrJxl5z0UJcsk4M4yY2JpfqGeCtNLU=

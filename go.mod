@@ -6,7 +6,7 @@ require (
 	github.com/KimMachineGun/automemlimit v0.7.2
 	github.com/VictoriaMetrics/fastcache v1.12.2
 	github.com/amazon-ion/ion-go v1.5.0
-	github.com/apache/fury/go/fury v0.0.0-20250424141711-dd3edef18cf9
+	github.com/apache/fury/go/fury v0.0.0-20250506115919-63b072b20396
 	github.com/bytedance/sonic v1.13.2
 	github.com/gin-contrib/pprof v1.5.3
 	github.com/gin-gonic/gin v1.10.0
