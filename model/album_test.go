@@ -3,8 +3,11 @@ package model
 import (
 	json "encoding/json"
 	"fmt"
+	"strconv"
+	"testing"
+
 	"github.com/amazon-ion/ion-go/ion"
-	fury "github.com/apache/fury/go/fury"
+	"github.com/apache/fory/go/fory"
 	"github.com/bytedance/sonic"
 	jsonv2 "github.com/go-json-experiment/json"
 	gojson "github.com/goccy/go-json"
@@ -12,8 +15,6 @@ import (
 	segment "github.com/segmentio/encoding/json"
 	sonnet "github.com/sugawarayuuta/sonnet"
 	jettison "github.com/wI2L/jettison"
-	"strconv"
-	"testing"
 )
 
 func marshalJson(name string, f func(interface{}) ([]byte, error), v interface{}) []byte {
@@ -34,14 +35,14 @@ func TestAlbumMarshal(t *testing.T) {
 		Price:  56.99,
 	}
 
-	fury := fury.NewFury(true)
-	if err = fury.RegisterTagType("album_bench_test.AlbumION", AlbumION{}); err != nil {
+	fory := fory.NewFory(true)
+	if err = fory.RegisterTagType("album_bench_test.AlbumION", AlbumION{}); err != nil {
 		panic(err)
 	}
 
 	jsoniterV := jsoniter.ConfigCompatibleWithStandardLibrary
 
-	marshalJson("fury", fury.Marshal, album)
+	marshalJson("fory", fory.Marshal, album)
 	marshalJson("standard", json.Marshal, album)
 	marshalJson("gojson", gojson.Marshal, album)
 	marshalJson("jsoniter", jsoniterV.Marshal, album)

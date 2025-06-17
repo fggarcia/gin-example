@@ -2,8 +2,12 @@ package model
 
 import (
 	json "encoding/json"
+	"reflect"
+	"strconv"
+	"testing"
+
 	"github.com/amazon-ion/ion-go/ion"
-	fury "github.com/apache/fury/go/fury"
+	fory "github.com/apache/fory/go/fory"
 	"github.com/bytedance/sonic"
 	jsonv2 "github.com/go-json-experiment/json"
 	gojson "github.com/goccy/go-json"
@@ -11,9 +15,6 @@ import (
 	segment "github.com/segmentio/encoding/json"
 	sonnet "github.com/sugawarayuuta/sonnet"
 	jettison "github.com/wI2L/jettison"
-	"reflect"
-	"strconv"
-	"testing"
 )
 
 func BenchmarkAlbumMarshal(b *testing.B) {
@@ -96,16 +97,16 @@ func BenchmarkAlbumMarshal(b *testing.B) {
 			jsonv2.Marshal(album)
 		}
 	})
-	b.Run("fury", func(b *testing.B) {
-		fury := fury.NewFury(true)
-		if err := fury.RegisterTagType("album_bench_test.AlbumION", AlbumION{}); err != nil {
+	b.Run("fory", func(b *testing.B) {
+		fory := fory.NewFory(true)
+		if err := fory.RegisterTagType("album_bench_test.AlbumION", AlbumION{}); err != nil {
 			panic(err)
 		}
 
 		b.ReportAllocs()
 
 		for b.Loop() {
-			fury.Marshal(album)
+			fory.Marshal(album)
 		}
 	})
 }

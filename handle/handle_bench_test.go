@@ -19,10 +19,12 @@ func BenchmarkHandle(b *testing.B) {
 
 		b.ReportAllocs()
 
+		var i int
 		for b.Loop() {
 			imod = i % 10
 			h = unique.Make(buildStr(imod))
 			consumeBool(handleMap[imod] == h)
+			i++
 		}
 	})
 	b.Run("string", func(b *testing.B) {
