@@ -6,14 +6,14 @@ require (
 	github.com/KimMachineGun/automemlimit v0.7.4
 	github.com/VictoriaMetrics/fastcache v1.13.0
 	github.com/amazon-ion/ion-go v1.5.0
-	github.com/apache/fory/go/fory v0.0.0-20250811163724-81ca4fbd9a48
+	github.com/apache/fory/go/fory v0.0.0-20250818120829-b84255fae058
 	github.com/bytedance/sonic v1.14.0
 	github.com/gin-contrib/pprof v1.5.3
 	github.com/gin-gonic/gin v1.10.1
-	github.com/go-json-experiment/json v0.0.0-20250812200409-1b6c92ecbf10
+	github.com/go-json-experiment/json v0.0.0-20250813233538-9b1f9ea2e11b
 	github.com/goccy/go-json v0.10.5
 	github.com/google/go-cmp v0.7.0
-	github.com/google/pprof v0.0.0-20250630185457-6e76a2b096b5
+	github.com/google/pprof v0.0.0-20250820193118-f64d9cf942d6
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.18.0
 	github.com/mitchellh/copystructure v1.2.0
@@ -51,10 +51,10 @@ require (
 	github.com/ugorji/go/codec v1.3.0 // indirect
 	golang.org/x/arch v0.20.0 // indirect
 	golang.org/x/crypto v0.41.0 // indirect
-	golang.org/x/exp v0.0.0-20250811191247-51f88131bc50 // indirect
+	golang.org/x/exp v0.0.0-20250819193227-8b4c13bb791b // indirect
 	golang.org/x/net v0.43.0 // indirect
 	golang.org/x/sys v0.35.0 // indirect
 	golang.org/x/text v0.28.0 // indirect
-	google.golang.org/protobuf v1.36.7 // indirect
+	google.golang.org/protobuf v1.36.8 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
