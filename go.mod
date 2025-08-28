@@ -6,7 +6,7 @@ require (
 	github.com/KimMachineGun/automemlimit v0.7.4
 	github.com/VictoriaMetrics/fastcache v1.13.0
 	github.com/amazon-ion/ion-go v1.5.0
-	github.com/apache/fory/go/fory v0.0.0-20250818120829-b84255fae058
+	github.com/apache/fory/go/fory v0.0.0-20250828102629-72fd91cd13bf
 	github.com/bytedance/sonic v1.14.0
 	github.com/gin-contrib/pprof v1.5.3
 	github.com/gin-gonic/gin v1.10.1
@@ -19,7 +19,7 @@ require (
 	github.com/mitchellh/copystructure v1.2.0
 	github.com/proullon/ramsql v0.1.4
 	github.com/segmentio/encoding v0.5.3
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
 	github.com/sugawarayuuta/sonnet v0.0.0-20231004000330-239c7b6e4ce8
 	github.com/wI2L/jettison v0.7.4
 	golang.org/x/sync v0.16.0
@@ -30,7 +30,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/gabriel-vasile/mimetype v1.4.9 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.10 // indirect
 	github.com/gin-contrib/sse v1.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
